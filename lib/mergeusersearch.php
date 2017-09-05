@@ -121,7 +121,7 @@ class MergeUserSearch{
                    'SELECT *
                     FROM {user}
                     WHERE
-                        id LIKE :userid OR
+                        CAST(id AS TEXT) LIKE :userid OR
                         username LIKE :username OR
                         firstname LIKE :firstname OR
                         lastname LIKE :lastname OR

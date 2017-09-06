@@ -86,14 +86,9 @@ class reviewuserform extends moodleform
             $buttonarray[0][] = $this->output->render($mergeusersbutton);
         }
         $mergeurl->param('option', 'clearselection');
-        $mergeusersbutton = new single_button($mergeurl, get_string('clear_selection', 'tool_mergeusers'));
+        $mergeusersbutton = new single_button($mergeurl, get_string('back'));
         $buttonarray[0][] = $this->output->render($mergeusersbutton);
 
-        if ($this->review_step) {
-            $mergeurl->param('option', 'searchusers');
-            $mergeusersbutton = new single_button($mergeurl, get_string('cancel'));
-            $buttonarray[0][] = $this->output->render($mergeusersbutton);
-        }
         $htmltable = new html_table();
         $htmltable->attributes['class'] = 'clearfix';
         $htmltable->data = $buttonarray;

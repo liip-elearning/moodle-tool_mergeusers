@@ -87,6 +87,9 @@ class UserSelectTable extends html_table implements renderable
             'col_userid' => 'Id',
             'col_username' => get_string('user'),
             'col_email' => get_string('email'),
+            'col_loginname' => get_string('username'),
+            'col_auth' => get_string('authentication'),
+            'col_lastlogin' => get_string('lastlogin'),
             'col_idnumber' => get_string('idnumber'),
         );
 
@@ -94,6 +97,12 @@ class UserSelectTable extends html_table implements renderable
         $this->colclasses = array_keys($columns);
 
         foreach ($users as $userid => $user) {
+            if ($user->lastlogin) {
+                $strlastlogin = format_time(time() - $user->lastlogin);
+            } else {
+                $strlastlogin = get_string('never');
+            }
+
             $row = array();
             $spanclass = ($user->suspended) ? ('usersuspended') : ('');
             $row[] = html_writer::empty_tag('input', array('type' => 'radio', 'name' => 'olduser', 'value' => $userid, 'id' => 'olduser' . $userid));
@@ -101,6 +110,9 @@ class UserSelectTable extends html_table implements renderable
             $row[] = html_writer::tag('span', $user->id, array('class' => $spanclass));
             $row[] = html_writer::tag('span', $this->renderer->show_user($user->id, $user), array('class' => $spanclass));
             $row[] = html_writer::tag('span', $user->email, array('class' => $spanclass));
+            $row[] = html_writer::tag('span', $user->username, array('class' => $spanclass));
+            $row[] = html_writer::tag('span', $user->auth, array('class' => $spanclass));
+            $row[] = html_writer::tag('span', $strlastlogin, array('class' => $spanclass));
             $row[] = html_writer::tag('span', $user->idnumber, array('class' => $spanclass));
             $this->data[] = $row;
         }
